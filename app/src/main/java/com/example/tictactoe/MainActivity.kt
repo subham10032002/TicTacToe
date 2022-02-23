@@ -1,5 +1,6 @@
 package com.example.tictactoe
 
+import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -11,6 +12,7 @@ class MainActivity : AppCompatActivity() , View.OnClickListener{
     var Player = true
             var tableStatus = Array(3) {IntArray(3)}
     lateinit var table :  Array<Array<Button>>
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -32,6 +34,7 @@ class MainActivity : AppCompatActivity() , View.OnClickListener{
             initializeTableStatus()
             TOTAL_COUNT=0
             Player=true
+            textView.text="Player X Turn"
         }
         initializeTableStatus()
 
@@ -44,10 +47,18 @@ class MainActivity : AppCompatActivity() , View.OnClickListener{
            for(j in 0..2)
            {
                tableStatus[i][j]=-1;
-               table[i][j].isEnabled = true;
-               table[i][j].text=""
+
            }
        }
+
+        for(i in table)
+        {
+            for(button in i)
+            {
+                button.isEnabled = true;
+                button.text=""
+            }
+        }
     }
 
     override fun onClick(v: View?) {
@@ -96,12 +107,101 @@ class MainActivity : AppCompatActivity() , View.OnClickListener{
             updateTextView("Game Draw")
         }
 
+        checkWinner()
+
+    }
+
+    private fun checkWinner() {
+//        Horizontal winner
+        for(i in 0..2)
+        {
+            if((tableStatus[i][0]==tableStatus[i][1]) && (tableStatus[i][1]==tableStatus[i][2]))
+            {
+                if(tableStatus[i][0]==1)
+                {
+                    updateTextView("Player X is Winner")
+                    disableButton()
+                    break
+                }
+                else if(tableStatus[i][0]==0)
+                {
+                    updateTextView("Player Y is Winner")
+                    disableButton()
+                    break
+                }
+            }
+        }
+
+//        Vertical rows
+
+        for(i in 0..2)
+        {
+            if((tableStatus[0][i]==tableStatus[1][i]) && (tableStatus[1][i]==tableStatus[2][i]))
+            {
+                if(tableStatus[0][i]==1)
+                {
+                    updateTextView("Player X is Winner")
+                    disableButton()
+                    break
+                }
+                else if(tableStatus[0][i]==0)
+                {
+                    updateTextView("Player Y is Winner")
+                    disableButton()
+                    break
+                }
+            }
+        }
+//
+////        first diagonal r
+//
+        if(tableStatus[0][0]==tableStatus[1][1] && tableStatus[1][1]==tableStatus[2][2])
+        {
+            if(tableStatus[0][0]==1)
+            {
+                updateTextView("Player X is Winner")
+                disableButton()
+
+            }
+            else if(tableStatus[0][0]==0)
+            {
+                updateTextView("Player Y is Winner")
+                disableButton()
+
+            }
+        }
+//
+////        second diagonal
+        if(tableStatus[0][2]==tableStatus[1][1] && tableStatus[1][1]==tableStatus[2][0])
+        {
+            if(tableStatus[0][2]==1)
+            {
+                updateTextView("Player X is Winner")
+                disableButton()
+
+            }
+            else if(tableStatus[0][2]==0)
+            {
+                updateTextView("Player Y is Winner")
+                disableButton()
+
+            }
+        }
     }
 
     private fun updateTextView(s: String) {
           textView.text= s
     }
-
+    private fun disableButton()
+    {
+        for(i in table)
+        {
+            for(button in i )
+            {
+               button.isEnabled=false
+            }
+        }
+    }
     private fun updateValue(row: Int, col: Int, player: Boolean) {
         var text = if(player) "X" else "0"
         var any = if(player) 1 else 0
