@@ -79,7 +79,27 @@ class MainActivity : AppCompatActivity() , View.OnClickListener{
            } R.id.button33 ->{
            updateValue(row=2, col=2, player=Player)
        }
+
        }
+        TOTAL_COUNT++
+        Player = !Player
+        if(Player)
+        {
+            updateTextView("Player X Turn")
+        }
+        else
+        {
+            updateTextView("Player Y Turn")
+        }
+        if(TOTAL_COUNT==9)
+        {
+            updateTextView("Game Draw")
+        }
+
+    }
+
+    private fun updateTextView(s: String) {
+          textView.text= s
     }
 
     private fun updateValue(row: Int, col: Int, player: Boolean) {
