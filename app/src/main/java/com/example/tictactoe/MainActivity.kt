@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
+import androidx.appcompat.app.AlertDialog
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() , View.OnClickListener{
@@ -16,6 +17,9 @@ class MainActivity : AppCompatActivity() , View.OnClickListener{
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+
+
 
         table = arrayOf(
                arrayOf(button11,button12,button13),
@@ -105,12 +109,34 @@ class MainActivity : AppCompatActivity() , View.OnClickListener{
         if(TOTAL_COUNT==9)
         {
             updateTextView("Game Draw")
+            val builder =  AlertDialog.Builder(this)
+                builder.setTitle("Game Draw");
+                builder.setMessage("Best of luck for the next turn")
+                builder.setPositiveButton("OK"){ _, _ ->
+
+                }
+
+                val alertDialog: AlertDialog = builder.create()
+            alertDialog.show()
+
         }
 
         checkWinner()
 
     }
+   private fun alert(a :String , b : String)
+   {
+       val builder =  AlertDialog.Builder(this)
+       builder.setTitle(a)
+       builder.setMessage(b)
+       builder.setPositiveButton("OK"){ _, _ ->
 
+       }
+
+       val alertDialog: AlertDialog = builder.create()
+       alertDialog.show()
+
+   }
     private fun checkWinner() {
 //        Horizontal winner
         for(i in 0..2)
@@ -120,12 +146,14 @@ class MainActivity : AppCompatActivity() , View.OnClickListener{
                 if(tableStatus[i][0]==1)
                 {
                     updateTextView("Player X is Winner")
+                    alert("Player X is Winner", " CONGRATULATIONS Player X")
                     disableButton()
                     break
                 }
                 else if(tableStatus[i][0]==0)
                 {
                     updateTextView("Player Y is Winner")
+                    alert("Player Y is Winner", " CONGRATULATIONS Player Y")
                     disableButton()
                     break
                 }
@@ -141,12 +169,14 @@ class MainActivity : AppCompatActivity() , View.OnClickListener{
                 if(tableStatus[0][i]==1)
                 {
                     updateTextView("Player X is Winner")
+                    alert("Player X is Winner", " CONGRATULATIONS Player X")
                     disableButton()
                     break
                 }
                 else if(tableStatus[0][i]==0)
                 {
                     updateTextView("Player Y is Winner")
+                    alert("Player Y is Winner", " CONGRATULATIONS Player Y")
                     disableButton()
                     break
                 }
@@ -160,12 +190,14 @@ class MainActivity : AppCompatActivity() , View.OnClickListener{
             if(tableStatus[0][0]==1)
             {
                 updateTextView("Player X is Winner")
+                alert("Player X is Winner", " CONGRATULATIONS Player X")
                 disableButton()
 
             }
             else if(tableStatus[0][0]==0)
             {
                 updateTextView("Player Y is Winner")
+                alert("Player Y is Winner", " CONGRATULATIONS Player Y")
                 disableButton()
 
             }
@@ -177,12 +209,14 @@ class MainActivity : AppCompatActivity() , View.OnClickListener{
             if(tableStatus[0][2]==1)
             {
                 updateTextView("Player X is Winner")
+                alert("Player X is Winner", " CONGRATULATIONS Player X")
                 disableButton()
 
             }
             else if(tableStatus[0][2]==0)
             {
                 updateTextView("Player Y is Winner")
+                alert("Player Y is Winner", " CONGRATULATIONS Player Y")
                 disableButton()
 
             }
